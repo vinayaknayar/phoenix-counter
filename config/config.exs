@@ -9,6 +9,7 @@ import Config
 
 # Configures the endpoint
 config :counter, CounterWeb.Endpoint,
+  load_from_system_env: true,
   url: [host: "localhost"],
   render_errors: [view: CounterWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Counter.PubSub,
