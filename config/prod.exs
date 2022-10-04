@@ -11,6 +11,11 @@ import Config
 # before starting your production server.
 config :counter, CounterWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+
+config :gigalixir_getting_started, GigalixirGettingStartedWeb.Endpoint,
+  load_from_system_env: true,
+  url: [host: "https://whitesmoke-fuchsia-siskin.gigalixirapp.com", port: 80],
+  cache_static_manifest: "priv/static/cache_manifest.json"
 # Do not print debug messages in production
 config :logger, level: :info
 
@@ -47,9 +52,18 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
+# config :counter, CounterWeb.Endpoint,
+#   http: [port: {:system, "PORT"}], # Possibly not needed, but doesn't hurt
+#   url: [host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 443],
+#   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
+#   server: true
+
+# config :counter, CounterWeb.Repo,
+#   adapter: Ecto.Adapters.Postgres,
+#   url: System.get_env("DATABASE_URL"),
+#   ssl: true,
+#   pool_size: 2 # Free tier db only allows 4 connections. Rolling deploys need pool_size*(n+1) connections where n is the number of app replicas.
 config :counter, CounterWeb.Endpoint,
-  http: [port: {:system, "PORT"}], # Possibly not needed, but doesn't hurt
-  url: [host: System.get_env("APP_NAME") <> ".gigalixirapp.com", port: 443],
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   server: true
 
@@ -57,4 +71,4 @@ config :counter, CounterWeb.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   ssl: true,
-  pool_size: 2 # Free tier db only allows 4 connections. Rolling deploys need pool_size*(n+1) connections where n is the number of app replicas.
+  pool_size: 1 # Free tier db only allows 1 connection
